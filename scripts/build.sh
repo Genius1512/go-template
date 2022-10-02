@@ -4,7 +4,12 @@ if [ $1 == "all" ] ; then
   BIN_DIRS=("cmd" "examples")
 
   for BIN_DIR in ${BIN_DIRS[@]} ; do
-    for pkg in $BIN_DIR/*/ ; do    
+    for pkg in $BIN_DIR/*/ ; do
+      if [ "$pkg" != "${a//[\[\]|.? +*]/}"  ] ; then
+        continue
+      fi
+
+
       base=$(basename "$pkg")
 
       go build -o "bin/$base" "$pkg/main.go"
